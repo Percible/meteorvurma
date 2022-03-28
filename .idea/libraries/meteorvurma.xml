@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="meteorvurma">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/meteorvurma.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
