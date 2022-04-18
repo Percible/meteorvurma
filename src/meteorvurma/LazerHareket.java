@@ -44,7 +44,7 @@ public class LazerHareket extends FrameHareket {
                                 itr.remove();
                                 GrafikSinifi.astreoidCarpmaKucuk = false;
                                 Runtime.getRuntime().gc();
-                                
+
                             }
 
                         }

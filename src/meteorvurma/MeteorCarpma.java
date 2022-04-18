@@ -16,7 +16,6 @@ public class MeteorCarpma extends FrameHareket {
         return mCarpma;
     }
 
-    
     //BURADA METEOR ILE ARAC CARPISTIGINDA OLUSACAK SEYLERI KODLADIM.
     @Override
     public void oynatma() {
@@ -36,9 +35,9 @@ public class MeteorCarpma extends FrameHareket {
                                 GrafikSinifi.meteorY[i] = -150;
 
                                 GrafikSinifi.patlamaKontrol = true;
-                                
+
                                 if (GrafikSinifi.patlamaKontrol == true) {
-                                    GrafikSinifi.saglik =GrafikSinifi.saglik-10;
+                                    GrafikSinifi.Saglik = GrafikSinifi.Saglik - 1;
                                 }
                             }
                         }

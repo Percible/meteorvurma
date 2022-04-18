@@ -1,10 +1,19 @@
 package meteorvurma;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JPanel;
 import static meteorvurma.AracHareket.sayac;
 
-public class Sesler implements Muzik {
+public class Sesler extends JPanel implements Muzik {
 
     GrafikSinifi sarki = new GrafikSinifi();
+
+    static boolean sesKontrol;
+
+    public Sesler() {
+
+    }
 
     @Override
     public void LazerSesi() {
@@ -19,8 +28,16 @@ public class Sesler implements Muzik {
 
     @Override
     public void OyunIciSes() {
-        
+
         sarki.OyunIciSes();
+
+    }
+
+    @Override
+    public void OyunIciSesDurdur() {
+
+        sarki.OyunIciSesDurdur();
+
     }
 
 }

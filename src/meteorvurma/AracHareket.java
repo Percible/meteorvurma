@@ -10,11 +10,15 @@ import java.util.Timer;
 import java.util.stream.DoubleStream;
 
 import javax.swing.JPanel;
+import static meteorvurma.Sesler.sesKontrol;
 
 public class AracHareket extends JPanel implements KeyListener {
 
     Timer timer;
-    MuzikCalma mCal = new MuzikCalma();
+                int sayma =0;
+                MuzikCalma mCal = new MuzikCalma();
+                
+
 
     public static int sayac = 10;
     GrafikSinifi sarki = new GrafikSinifi();
@@ -72,6 +76,29 @@ public class AracHareket extends JPanel implements KeyListener {
                 }
             }
 
+        }
+        
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            
+            sayma++;
+            sesKontrol = false;
+            if (sayma>0) {
+                MuzikCalma.getInstance().OyunIciSesCal();
+
+            }
+            
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_O) {
+            sayma=0;
+            
+            if(sayma == 0){
+                
+                MuzikCalma.getInstance().OyunIciSesiDurdurma();
+
+            }
+            
+            
         }
 
     }

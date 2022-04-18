@@ -6,8 +6,7 @@ public class Main {
 
         //  BURADA SİNGLETON İÇİN ÇAGIRDIGIM METHODLAR VAR HOCAM
         //  KURUCU METHODUN PRİVATE OLMASI LAZIM HOCAM. BU SAYEDE NEW ILE YENİ NESNE OLUSMASINI ENGELLIYORUZ.
-        MuzikCalma mCal = new MuzikCalma();
-        
+
         FrameSinifi.getInstance().oynatma();
         ArkaplanHareket.getInstance().oynatma();
         AracHiz.getInstance().oynatma();
@@ -17,7 +16,9 @@ public class Main {
         LazerHareket.getInstance().oynatma();
         LazerMeteorCarpisma.getInstance().oynatma();
         LazerAtimi.getInstance().oynatma();
-        mCal.LazerSesiCal();
-        mCal.OyunIciSesCal();
+        MuzikCalma.getInstance().LazerSesiCal();
+        
+        
+
     }
 }

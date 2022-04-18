@@ -1,4 +1,3 @@
-
 package meteorvurma;
 
 public class Lazer {
@@ -28,8 +27,8 @@ public class Lazer {
     public void setAtesY(int atesY) {
         this.atesY = atesY;
     }
-    public Lazer(){
-        
-        
+
+    public Lazer() {
+
     }
 }

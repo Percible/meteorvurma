@@ -12,6 +12,7 @@ public class LazerMeteorCarpisma extends FrameHareket {
 
     Timer timer;
     Lazer lazer;
+    
     private final static LazerMeteorCarpisma lmCarpisma = new LazerMeteorCarpisma();
 
     private LazerMeteorCarpisma() {// SİNGLETON İÇİN PRİVATE KURUCU METHODUM BURADA 
@@ -47,8 +48,22 @@ public class LazerMeteorCarpisma extends FrameHareket {
                                 GrafikSinifi.meteorY[i] = -100;
 
                                 if (GrafikSinifi.astreoidCarpmaKucuk == true) {
-                                    GrafikSinifi.saglik = GrafikSinifi.saglik + 10;
+                                    GrafikSinifi.Skor = GrafikSinifi.Skor + 10;
+                                    GrafikSinifi.para +=1;
                                 }
+                                if (GrafikSinifi.astreoidCarpmaKucuk == true) {
+                                    if (GrafikSinifi.Skor >149) {
+                                        GrafikSinifi.para += 2;
+                                        
+                                        if (GrafikSinifi.Skor>349) {
+                                            GrafikSinifi.para +=1;
+
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                
 
                             }
                         } catch (Exception e) {

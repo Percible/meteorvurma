@@ -20,7 +20,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 
 public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
 
@@ -32,6 +31,7 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     public Rectangle kural = new Rectangle(100, 380, 180, 50);
     public Rectangle cikis1 = new Rectangle(460, 380, 100, 50);
     public Rectangle cikis2 = new Rectangle(460, 380, 100, 50);
+    public Rectangle tekrarOyna = new Rectangle(460, 380, 100, 50);
 
     static BufferedImage arka1;
     static BufferedImage arka2;
@@ -58,7 +58,10 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     static int geciciX = 0;
     static int geciciY = 0;
     static int carpmaDegeri = 0;
-    static int saglik = 100;
+    static int Skor = 0;
+    static int Saglik = 10;
+    static int skorKontrol = 0;
+    static int para = 0;
 
     public static boolean ileri = false, geri = false, saga = false, sola = false;
     public static boolean resett = false;
@@ -69,6 +72,7 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     public static boolean patlamaKontrol = false;
     public static boolean lazerKontrol = false;
     public static boolean lazerAtimi = false;
+
     static boolean astreoidCarpmaKucuk = false;
     static boolean saglikKontrol = false;
 
@@ -83,10 +87,9 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     JButton b4 = new JButton();
     JButton b5 = new JButton();
     JButton b6 = new JButton();
-    
+    JButton b7 = new JButton();
 
     public GrafikSinifi() {
-        
 
         try {//Burada butonlari tanittim hocam.
             b1.setBounds(125, 150, 100, 50);
@@ -100,12 +103,15 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
             b5.setBounds(460, 380, 100, 50);
             b5.setText("Geri");
             b6.setBounds(100, 380, 180, 50);
+            b7.setBounds(460, 380, 100, 50);
+            b7.setText("Geri");
             b1.addActionListener(this);
             b2.addActionListener(this);
             b3.addActionListener(this);
             b4.addActionListener(this);
             b5.addActionListener(this);
             b6.addActionListener(this);
+            b7.addActionListener(this);
 
             //BURADA RESİMLERİ DOSYADAN CEKTIM
             arka1 = ImageIO.read(new File("resim\\indir.png"));
@@ -136,6 +142,11 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
             aracX = 250;
             aracY = 350;
 
+            if (Saglik < 10) {
+                Saglik = 10;
+            }
+            Skor = 0;
+
             for (int i = 0; i < 6; i++) {
                 GrafikSinifi.meteorX[i] = 10 + sayac;
                 GrafikSinifi.meteorY[i] = -100 + sayac;
@@ -149,14 +160,19 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     public void LazerSesi() {//BURASI MUZIK ICIN YAPTIM DAHA SONRA PROJEYE EKLEYECEGIM DENEME OLARAK YAPTIM.
 
         mp3player.play();
-        
 
     }
-    
+
     @Override
     public void OyunIciSes() {
         mp3.play();
-           }
+    }
+    
+   
+    @Override
+    public void OyunIciSesDurdur() {
+        mp3.stop();
+    }
 
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h) {
@@ -168,7 +184,7 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        
+
         if (oyunkontrol == false) {//EGER OYUN KONTROL SIFIR ISE BASLAMA EKRANINA GELIYOR ZATEN OYUN BU EKRAN ILE BASLIYOR.
 
             this.add(b1);
@@ -198,6 +214,7 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
             g2d.draw(cikis);
             g2d.draw(hakkimda);
             remove(b6);
+            remove(b7);
 
             repaint();
 
@@ -225,6 +242,7 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
                 remove(b2);
                 remove(b3);
                 remove(b5);
+                remove(b7);
 
                 // HAKKIMDA KISMININ ICINDE KURALLARI KOYDUM CUNKU ILK EKRANA KOYDUGUMDA BUTONLAR CALISMIYORDU DUZELTEMEDIM BURAYA ALDIM.
                 if (kurallar == true) {
@@ -233,25 +251,35 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
                     Font kur2 = new Font("arial", Font.BOLD, 30);
                     g.setColor(Color.black);
                     g.fillRect(0, 0, FrameSinifi.setGenislik, FrameSinifi.setYukseklik);
-
+                            
                     g.setFont(kur1);
                     g.setColor(Color.WHITE);
                     g.drawString("TUŞLAR", 180, 100);
                     g.setFont(kur2);
+                    
+                    
 
                     g.setColor(Color.WHITE);
                     g.drawString("GERİ", cikis2.x + 10, cikis2.y + 35);
+                    
+                    g.setFont(kur2);
+                    g.setColor(Color.white);
+                    g.drawString("W,A,S,D : Yön Tuşları", 50, 200);
+                    g.drawString("O,P Tuşları : Müzik Başlat ve Durdur", 50, 250);
+                    g.drawString("GERİ", cikis1.x + 10, cikis1.y + 35);
+                    
+                    
                     g2d.draw(cikis2);
                     remove(b1);
                     remove(b2);
                     remove(b3);
                     remove(b4);
+                    remove(b7);
 
                 }
             }
 
-        } 
-        // BURADA OYNA BUTONUNA BASILDIGINDA OYUN ICERIGI GOSTERILIYOR
+        } // BURADA OYNA BUTONUNA BASILDIGINDA OYUN ICERIGI GOSTERILIYOR
         else {
 
             g.drawImage(arka1, 0, arkaplanY1, 600, 500, null);
@@ -278,26 +306,47 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
             // BURADA ARRAY LIST KULLANMAK ZORUNDA KALDIM HOCAM COK ARASTIRDIM AMA DIZI ILE YAPAMADIM ARRAYLISTIN OZEELLIKLERI ISIME YARADI
             // AMA ARRAYLIST DE TAM ISIME YARAMADI LAZER ATMAK ICIN SPACE TUSUNA COK BASILDIGINDA "LISTEDE KUYRUK BOS" HATASI VERIYORDU 
             //BU YUZDEN OYUNA LAZER ATMA SINIRI GETIRDIM HER 2 SANIYEDE BIR LAZER ATILIYOR. SIMDILIK HATA VERMEDI
-            
-                for (Lazer lazer : GrafikSinifi.lazerler) {
-                    try {
-                        g.drawImage(GrafikSinifi.lazer, lazer.getAtesX(), lazer.getAtesY(), 20, 40, null);
-                    } 
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+            for (Lazer lazer : GrafikSinifi.lazerler) {
+                try {
+                    g.drawImage(GrafikSinifi.lazer, lazer.getAtesX(), lazer.getAtesY(), 20, 40, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            
 
-            //if(saglik <10){
-            //  g.setColor(Color.BLACK);
-            //g.fillRect(0, 0, FrameSinifi.setGenislik, FrameSinifi.setYukseklik);
-            //}
-            //BURADA SAGLIK KISMINI YAZDIM HOCAM BUNU DAHA YENI YAPTIM GAME OVER KISMINI YAPAMADIM.
-            g.setColor(Color.BLUE);
-            g.setFont(new Font("Arial", Font.BOLD, 20));
-            g.drawString("Saglik : " + GrafikSinifi.saglik, 5, 30);
+            }
+
+            if (Saglik > 0 && oyunkontrol == true) {
+
+                oyunIciDegerler skor = new oyunIciDegerler(Skor, para);
+
+                g.setColor(Color.white);
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                g.drawString("Skor : " + GrafikSinifi.Skor, 5, 30);
+                g.setColor(Color.white);
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                g.drawString("Sağlık : " + GrafikSinifi.Saglik, 475, 30);
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                g.drawString("Para : " + GrafikSinifi.para, 475, 60);
+
+            } else {
+                this.add(b7);
+                g.setColor(Color.black);
+                g.fillRect(0, 0, FrameSinifi.setGenislik, FrameSinifi.setYukseklik);
+                if (Saglik < 10) {
+                Saglik = 10;
+                }
+                g.setColor(Color.WHITE);
+
+                g.drawString("TEKRAR OYNA", tekrarOyna.x + 10, tekrarOyna.y + 35);
+                g2d.draw(tekrarOyna);
+                if (skorKontrol < 1) {
+                    oyunIciDegerler skorr = new oyunIciDegerler(Skor, para);
+                    skorr.degerGonderme("Skorunuz : ");
+                    skorKontrol++;
+                }
+                oyunkontrol = false;
+
+            }
 
             remove(b1);
             remove(b2);
@@ -312,7 +361,6 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
         }
 
     }
-    
 
     //BURADA BUTONLARA BASILDIGINDA GERCEKLESMESI GEREKEN OZELLIKLERI EKLEDIM.
     @Override
@@ -320,6 +368,8 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
         if (e.getSource() == b1) {
             oyunkontrol = true;
             System.out.println("Buton testi");
+            skorKontrol = 0;
+            reset();
 
         }
         if (e.getSource() == b2) {
@@ -339,6 +389,17 @@ public class GrafikSinifi extends JPanel implements ActionListener, Muzik {
         if (e.getSource() == b5) {
             kurallar = false;
 
+        }
+        if (e.getSource() == b7) {
+
+            oyunkontrol = false;
+            if (Saglik < 10) {
+                Saglik = 10;
+            }
+
+            //Skor skor = new Skor(Skor);
+            //skor.skorGonderme("n");
+            Skor = 0;
         }
 
     }
